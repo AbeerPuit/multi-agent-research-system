@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #0b0f19, #020617);
+  color: white;
+}
+
+/* MAIN LAYOUT */
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid #1f2937;
+
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  color: #946af6;
+  position: sticky;
+  top: 0;
+  background: #0f172a;
+  padding-bottom: 10px;
+}
+
+.step {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: #1e293b;
+  transition: 0.3s;
+}
+
+.step:hover {
+  background: #334155;
+}
+
+/* MAIN CONTENT */
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* TITLE */
+.title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #58f47c, #3b82f6);
+  background-clip: text;             
+  -webkit-background-clip: text;    
+  -webkit-text-fill-color: transparent;
+}
+
+/* INPUT */
+.inputBox {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1e293b;
+  color: white;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+  color: white;
+  cursor: pointer;
+}
+
+/* CARDS */
+.card {
+  background: rgba(30, 41, 59, 0.7);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid #1f2937;
+}
+
+/* GLOW */
+.glow {
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+}
+
+/* PROGRESS */
+.progressItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.done {
+  color: #22c55e;
+}
+
+.running {
+  color: #facc15;
+}
+
+/* RIGHT PANEL */
+.rightPanel {
+  width: 300px;
+  padding: 20px;
+  border-left: 1px solid #1f2937;
+  background: rgba(15, 23, 42, 0.95);
+
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.rightPanel h2 {
+  position: sticky;
+  top: 0;
+  background: #0f172a;
+  padding-bottom: 10px;
+  color: #facc15;
+}
+
+/* ANIMATION */
+.fade {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
