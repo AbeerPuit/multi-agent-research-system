@@ -2,25 +2,43 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import "./App.css";
 
+// ✅ Dynamic API URL (works local + deployed)
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:8000";
+
 export default function App() {
   const [topic, setTopic] = useState("");
   const [steps, setSteps] = useState([]);
+  const [error, setError] = useState("");
 
   const startResearch = () => {
     if (!topic) return;
+
     setSteps([]);
+    setError("");
 
-    const es = new EventSource(
-      `http://localhost:8000/research?topic=${encodeURIComponent(topic)}`
-    );
+    try {
+      const es = new EventSource(
+        `${API_URL}/research?topic=${encodeURIComponent(topic)}`
+      );
 
-    es.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      setSteps((prev) => [...prev, data]);
-      if (data.step === "complete") es.close();
-    };
+      es.onmessage = (e) => {
+        const data = JSON.parse(e.data);
 
-    es.onerror = () => es.close();
+        setSteps((prev) => [...prev, data]);
+
+        if (data.step === "complete") {
+          es.close();
+        }
+      };
+
+      es.onerror = () => {
+        setError("⚠️ Connection error. Backend may be offline.");
+        es.close();
+      };
+    } catch (err) {
+      setError("Something went wrong.");
+    }
   };
 
   const getStep = (name) =>
@@ -41,7 +59,7 @@ export default function App() {
 
       {/* SIDEBAR */}
       <div className="sidebar">
-        <h2> Pipeline</h2>
+        <h2>⚙️ Pipeline</h2>
         {["Search", "Reader", "Writer", "Critic", "Complete"].map((s) => (
           <div key={s} className="step">{s}</div>
         ))}
@@ -49,7 +67,7 @@ export default function App() {
 
       {/* MAIN */}
       <div className="main">
-        <h1 className="title"> Multi-Agent Research System</h1>
+        <h1 className="title">🧠 Multi-Agent Research System</h1>
 
         <div className="inputBox">
           <input
@@ -59,6 +77,9 @@ export default function App() {
           />
           <button onClick={startResearch}>Start</button>
         </div>
+
+        {/* ERROR */}
+        {error && <div className="error">{error}</div>}
 
         {/* PROGRESS */}
         <div className="card">
@@ -85,7 +106,7 @@ export default function App() {
 
       {/* RIGHT PANEL */}
       <div className="rightPanel">
-        <h2> Critics Review</h2>
+        <h2>🧠 Critics Review</h2>
 
         <div className="card">
           <ReactMarkdown>{format(critic)}</ReactMarkdown>
